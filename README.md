@@ -1,17 +1,17 @@
-[Array](/NeetCode150/Array/README.md)
+[Array](/LeetCodeTips/Array/README.md)
 
-[BinarySearch](/NeetCode150/BinarySearch/README.md)
+[BinarySearch](/LeetCodeTips/BinarySearch/README.md)
 
-[Dynamic programming](/NeetCode150/DP-1/README.md)
+[Dynamic programming](/LeetCodeTips/DP-1/README.md)
 
-[Graphs](/NeetCode150/Graphs/README.md)
+[Graphs](/LeetCodeTips/Graphs/README.md)
 
-[Trees](/NeetCode150/Trees/README.md)
+[Trees](/LeetCodeTips/Trees/README.md)
 
-[SlidingWindow](/NeetCode150/SlidingWindow/README.md)
+[SlidingWindow](/LeetCodeTips/SlidingWindow/README.md)
 
-[TwoPointers](/NeetCode150/TwoPointers/README.md)
+[TwoPointers](/LeetCodeTips/TwoPointers/README.md)
 
-[Stack](/NeetCode150/Stack/README.md)
+[Stack](/LeetCodeTips/Stack/README.md)
 
-[LinkedList](/NeetCode150/LinkedList/README.md)
+[LinkedList](/LeetCodeTips/LinkedList/README.md)
