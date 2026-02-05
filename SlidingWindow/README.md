@@ -94,3 +94,65 @@ public:
     }
 };
 ```
+
+
+## Permutation in String
+
+- Note : The max number of characters is 26 ! (given that the chars are simple or capital)
+
+- Find the permutation of s1 substring inside the s2 . 
+
+1. first create vectors (or hashmaps) storing counts of the chars in s1 and in the same time ... check the count of the starting window in the s2 string as well . 
+2. now using a while or for loop ... slide the window 
+3. when sliding the window ... add the update the count with right side char and also while removing the left side char . 
+4. If it is equal boom return true !
+
+```C++
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        if (s1.length() > s2.length()) {
+            return false;
+        }
+
+        vector<int> s1Count(26, 0);
+        vector<int> s2Count(26, 0);
+        for (int i = 0; i < s1.length(); i++) {
+            s1Count[s1[i] - 'a']++;
+            s2Count[s2[i] - 'a']++;
+        }
+
+        int matches = 0;
+        for (int i = 0; i < 26; i++) {
+            if (s1Count[i] == s2Count[i]) {
+                matches++;
+            }
+        }
+
+        int l = 0;
+        for (int r = s1.length(); r < s2.length(); r++) {
+            if (matches == 26) {
+                return true;
+            }
+
+            int index = s2[r] - 'a';
+            s2Count[index]++;
+            if (s1Count[index] == s2Count[index]) {
+                matches++;
+            } else if (s1Count[index] + 1 == s2Count[index]) {
+                matches--;
+            }
+
+            index = s2[l] - 'a';
+            s2Count[index]--;
+            if (s1Count[index] == s2Count[index]) {
+                matches++;
+            } else if (s1Count[index] - 1 == s2Count[index]) {
+                matches--;
+            }
+            l++;
+        }
+        return matches == 26;
+    }
+};
+```
