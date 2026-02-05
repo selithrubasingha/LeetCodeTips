@@ -56,5 +56,41 @@ public:
         return res;
     }
 };
-``
+```
 
+## Longest Repeating Character Replacement
+
+- You are given the ability to change the chars K times ... to create the longest repeating character sequence . But what is the intuition ?
+
+1.  You see , keep a count of the chars in the substring , and instead of the char with the largest count , 
+2.  Then get the sum of all the other counts , if this sum <= k times . your good to go and change . 
+3.  but if sum is larger then it is time to imcrement the l pointer and update the count hashMap as well . 
+
+```C++
+class Solution {
+public:
+    int characterReplacement(std::string s, int k) {
+        int res = 0;
+        unordered_set<char> charSet(s.begin(), s.end());
+
+        for (char c : charSet) {
+            int count = 0, l = 0;
+            for (int r = 0; r < s.size(); r++) {
+                if (s[r] == c) {
+                    count++;
+                }
+
+                while ((r - l + 1) - count > k) {
+                    if (s[l] == c) {
+                        count--;
+                    }
+                    l++;
+                }
+
+                res = std::max(res, r - l + 1);
+            }
+        }
+        return res;
+    }
+};
+```
