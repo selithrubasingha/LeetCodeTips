@@ -501,3 +501,62 @@ private:
 };
 ```
 
+## Word Break
+
+Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+eg:-
+
+**Input:** s = "leetcode", wordDict = ["leet","code"]
+
+**Output:** true
+
+**Explanation:** Return true because "leetcode" can be segmented as "leet code"
+
+**Thinking Pattern** : This problem similar to decode ways considering the fact that we take an `i` pointer and drag  it through the string untill the pointer reaches the end . 
+
+```C++
+class Solution {
+    // Memoization table: Stores results for each index 'i'
+    // -1: Unknown, 0: False, 1: True
+    vector<int> memo; 
+
+public:
+    bool solve(string& s, vector<string>& wordDict, int i) {
+        // Base Case: Reached the end successfully
+        if (i == s.length()) return true;
+        
+        // MEMO CHECK: If we already know the answer for index 'i', return it immediately.
+        if (memo[i] != -1) return memo[i];
+
+        for (string& w : wordDict) {
+            int len = w.length();
+            
+            // Check bounds and match efficiently
+            if (i + len <= s.length() && s.substr(i, len) == w) {
+                
+                // Recursive call
+                if (solve(s, wordDict, i + len)) {
+                    // If we found a valid path, mark this index as TRUE (1)
+                    return memo[i] = 1; 
+                }
+            }
+        }
+
+        // If we tried all words and none worked, mark this index as FALSE (0)
+        return memo[i] = 0;
+    }
+
+    bool wordBreak(string s, vector<string>& wordDict) {
+        // Initialize memo table with -1 (size is string length)
+        memo.assign(s.length(), -1);
+        
+        // Start recursion from index 0
+        return solve(s, wordDict, 0) == 1;
+    }
+};
+```
+
+- Notice how we make substrings in c++ , and also the bound checking logic before the recursive step . 
