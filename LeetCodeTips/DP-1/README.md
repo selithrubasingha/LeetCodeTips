@@ -204,3 +204,127 @@ private:
     }
 };
 ```
+
+
+## Longest Palindromic Substring
+
+* When talking about palindromes , the easiest way to find a find a palindrome substring is to select an char and expland from the left and right !!!
+* what about for even palindromes , choose 2 chars at first and expand from the left and right . 
+
+```C++
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int n = s.length();
+        string res = "";
+        int resLen = 0;
+        for (int i=0; i<n; i++){
+            int l = i;
+            int r = i ;
+
+        //odd_palindromes
+            while (l>=0 && r<n && s[l]==s[r]){
+                int pal_len = r-l+1;
+
+                if (resLen<pal_len){
+                    res = s.substr(l,pal_len);
+                    resLen = pal_len;
+                }
+
+                l--;
+                r++;
+
+            }
+
+
+            l=i;
+            r=i+1;
+
+            //even_palindromes
+            while (l>=0 && r<n && s[l]==s[r]){
+                int pal_len = r-l+1;
+
+                if (resLen<pal_len){
+                    res = s.substr(l,pal_len);
+                    resLen = pal_len;
+                }
+
+                l--;
+                r++;
+
+            }
+
+        }
+
+        return res;
+        
+    }
+};
+```
+
+This is NOT the recursive method but this actually the most efficient method for palindromes . 
+
+for the sake of completion here is how to do it recursively . 
+
+```C++
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <cstring> // for memset
+
+using namespace std;
+
+class Solution {
+public:
+    // Memo table: -1 = uncalculated, 0 = false, 1 = true
+    // We use 1001 based on typical constraint (s.length <= 1000)
+    int memo[1001][1001]; 
+
+    string longestPalindrome(string s) {
+        int n = s.length();
+        if (n == 0) return "";
+        
+        // Initialize memo table with -1
+        memset(memo, -1, sizeof(memo));
+        
+        int maxLen = 0;
+        int startIdx = 0;
+
+        // Iterate through all possible substrings s[i...j]
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                // If s[i...j] is a palindrome AND it's longer than current max
+                if (solve(s, i, j) == 1) {
+                    if (j - i + 1 > maxLen) {
+                        maxLen = j - i + 1;
+                        startIdx = i;
+                    }
+                }
+            }
+        }
+
+        return s.substr(startIdx, maxLen);
+    }
+
+private:
+    // Helper function: Returns 1 if s[i...j] is a palindrome, 0 otherwise
+    int solve(string& s, int i, int j) {
+        // Base Case 1: If i >= j, we have crossed over or are at the same char.
+        // Single char or empty string is always a palindrome.
+        if (i >= j) return 1;
+
+        // Base Case 2: Check Memo
+        if (memo[i][j] != -1) return memo[i][j];
+
+        // Recursive Step:
+        // Match outer chars AND check if inner substring is palindrome
+        if (s[i] == s[j]) {
+            memo[i][j] = solve(s, i + 1, j - 1);
+        } else {
+            memo[i][j] = 0; // Not a match, so not a palindrome
+        }
+
+        return memo[i][j];
+    }
+};
+````
