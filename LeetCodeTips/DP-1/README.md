@@ -327,4 +327,57 @@ private:
         return memo[i][j];
     }
 };
-````
+```
+
+## Palindromic Substrings
+
+* This is the same as longest palindromic substring , But the logic is changed a bit . You don't have to keep count of the longest substring ... BUT everytime you do l--;r++; you should increase the count++;
+
+```C++
+class Solution {
+public:
+    int memo[1001][1001]; 
+
+    // Recursive function to check if s[i...j] is a palindrome
+    bool solve(string &s, int i, int j) {
+        // Base case: If pointers cross or meet, it's a valid palindrome
+        // (This handles length 0 or 1 centers)
+        if (i >= j) return true;
+
+        // Check if we already calculated this state
+        if (memo[i][j] != -1) return memo[i][j];
+
+        // Logic: Ends must match AND inner part must be palindrome
+        if (s[i] == s[j]) {
+            return memo[i][j] = solve(s, i + 1, j - 1);
+        }
+
+        return memo[i][j] = false;
+    }
+    int countSubstrings(string s) {
+
+        int n = s.length();
+        memset(memo, -1, sizeof(memo));
+
+        int count = 0 ;
+
+        for (int i = 0; i<n ; i++){
+            for (int j =i; j<n ; j++){
+                bool isPalin = solve(s , i , j );
+
+                if (isPalin){
+                    count++;
+                }
+
+            }
+        }
+
+        return count ; 
+        
+
+
+        
+    }
+};
+```
+
