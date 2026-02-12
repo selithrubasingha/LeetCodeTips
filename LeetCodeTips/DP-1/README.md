@@ -440,3 +440,64 @@ private:
 
 **Key Takeaway:**
 Always check for `'0'` first! In this problem, `'0'` is a trap. It cannot stand alone, so if you encounter it at the start of your current chunk, that path returns 0 immediately.
+
+
+## Coin Change 
+
+- Now THIS is some real recursive problems !
+- You are given an integer array coins representing coins of different denominations (e.g. 1 dollar, 5 dollars, etc) and an integer amount representing a target amount of money.
+Return the fewest number of coins that you need to make up the exact target amount. If it is impossible to make up the amount, return -1.
+You may assume that you have an unlimited number of each coin.
+
+
+        In every recursive step you substract and get a new target ... if target is achievable then surely , the target before it is achievable too!
+        But what is the base case ?? When we substract if  we get a 0 , that means that The target is achievable ! we return 1 or true . if the target becomes negative , that means the target is non achievable and we should return 0 or false . 
+
+```C++
+#include <vector>
+#include <climits>
+#include <algorithm>
+
+using namespace std;
+
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        // Create a memo table of size amount + 1.
+        // We initialize with -2 to represent "not visited yet".
+        // We cannot use -1 because -1 is a valid result (meaning "impossible").
+        vector<int> memo(amount + 1, -2);
+        
+        return solve(coins, amount, memo);
+    }
+
+private:
+    int solve(vector<int>& coins, int rem, vector<int>& memo) {
+        // 1. Base Cases
+        if (rem < 0) return -1;
+        if (rem == 0) return 0;
+
+        // 2. Check Memo: If we've seen this 'rem' before, return the stored value.
+        if (memo[rem] != -2) {
+            return memo[rem];
+        }
+
+        int ans = INT_MAX;
+
+        for (int c : coins) {
+            int res = solve(coins, rem - c, memo);
+
+            if (res >= 0) {
+                ans = min(ans, res + 1);
+            }
+        }
+
+        // 3. Store Result in Memo before returning
+        // If ans is still INT_MAX, record -1 (impossible), otherwise record ans
+        memo[rem] = (ans == INT_MAX) ? -1 : ans;
+        
+        return memo[rem];
+    }
+};
+```
+
