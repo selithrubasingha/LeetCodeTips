@@ -38,3 +38,56 @@ private:
     }
 };
 ```
+
+## Min Cost Climbing Stairs
+
+- You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, you can either climb one or two steps.You can either start from the step with index 0, or the step with index 1.Return the minimum cost to reach the top of the floor.
+
+**Subproblem:**
+    This is super similar to the climbing stairs problem . The difference is that it has a cost now .
+
+So if i am in the fifth floor , I could climb to it from teh 4th or 3rd floors , but I need to choose the one with the minimum cost , so the recursive answer is the minimum out of the two of them . 
+
+```C++
+#include <vector>
+#include <algorithm> // for min
+
+using namespace std;
+
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        int n = cost.size();
+        
+        // 1. Create the MEMO table
+        // Size is n + 1 because we need to reach step 'n' (the top)
+        // Initialize with -1 to represent "not calculated yet"
+        vector<int> memo(n + 1, -1);
+
+        return solve(cost, n, memo);
+    }
+
+private:
+    // 2. Pass memo by REFERENCE (&memo) so we share the same cache
+    int solve(vector<int>& cost, int n, vector<int>& memo) {
+        
+        // Base Cases
+        if (n == 2) return min(cost[0],cost[1]);
+        if (n == 1) return 0;
+
+        // 3. CHECK: Have we solved this sub-problem already?
+        if (memo[n] != -1) {
+            return memo[n];
+        }
+
+        // Recursive Step:
+        int oneStep = solve(cost, n - 1, memo) + cost[n - 1];
+        int twoStep = solve(cost, n - 2, memo) + cost[n - 2];
+
+        // 4. STORE: Save the result in the memo table before returning
+        memo[n] = min(oneStep, twoStep);
+        
+        return memo[n];
+    }
+};
+```
