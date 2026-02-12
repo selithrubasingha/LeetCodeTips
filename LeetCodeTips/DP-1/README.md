@@ -153,3 +153,54 @@ private:
 ```
 
 * Notice in the code , when you n=input int n  , we're actually looking at the house n-1 ! That is cause of the indexing pattern in this method . We could change it if you like , but I am too lazy for that . 
+
+## House Robber 2
+
+* Same as House Robber 1 but the cache is that , the houses are arranged in a FULL CIRCLE ! How do we solve it ?
+
+**Thinking:**
+    The difference is that now the first and the last houses are interconnected , if you rob the first house , You can't rob the last house and vice versa . 
+
+    So how do we solve this ? We use the same solve function for House Robber 1 . and do it for nums[1:] and nums[:-2] ! and the the maximum of it . That way we can get the answer of the houses without robbing both first and last houses . 
+
+
+```C++
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        // 1. Create the memo table
+        // Size is n + 1 because we are solving for "first n houses"
+        vector<int> memo1(n + 1, -1);
+        vector<int> memo2(n + 1, -1);
+
+        if (nums.size()<=2) return solve(nums, n, memo1);
+
+        vector<int> sub(nums.begin() + 1, nums.end());
+        vector<int> sub2(nums.begin(), nums.end() - 1);
+        
+        return max(solve(sub, n-1, memo1),solve(sub2, n-1, memo2));
+    }
+private:
+    int solve(vector<int>& nums, int n, vector<int>& memo) {
+        // Base Cases
+        if (n <= 0) return 0; // If 0 houses, 0 money. Handles the (n-2) case safely.
+        if (n == 1) return nums[0]; // If 1 house, rob it.
+
+        // 2. CHECK: Have we calculated this 'n' before?
+        if (memo[n] != -1) {
+            return memo[n];
+        }
+
+        // Logic:
+        // Option A: Rob current house (nums[n-1]) + loot from (n-2) remaining houses
+        int robCurrent = nums[n - 1] + solve(nums, n - 2, memo);
+        
+        // Option B: Skip current house + loot from (n-1) remaining houses
+        int skipCurrent = solve(nums, n - 1, memo);
+
+        // 3. STORE: Save the max result
+        return memo[n] = max(robCurrent, skipCurrent);
+    }
+};
+```
