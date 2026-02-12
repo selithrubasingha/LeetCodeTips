@@ -381,3 +381,62 @@ public:
 };
 ```
 
+## Decode Ways
+
+* A message containing letters from `A-Z` is encoded into numbers using the mapping: `'A' -> "1", 'B' -> "2", ... 'Z' -> "26"`.
+* Given a string of digits, return the total number of ways to decode it.
+
+**How to Think:**
+
+This is almost exactly like **Climbing Stairs**!
+In Climbing Stairs, you can take 1 step or 2 steps.
+In Decode Ways, you can take **1 digit** or **2 digits**.
+
+**The Catch:**
+Unlike stairs, not every step is allowed.
+
+1. **One Digit:** You can take 1 digit *only* if it is NOT '0' (Mappings start at 1).
+2. **Two Digits:** You can take 2 digits *only* if they form a number between 10 and 26.
+
+**Recursive Logic:**
+If I am at index `i`:
+
+* `ways(i)` = `ways(i+1)` (if `s[i]` is valid) + `ways(i+2)` (if `s[i...i+1]` is valid).
+
+```c++
+class Solution {
+public:
+    int numDecodings(string s) {
+        vector<int> memo(s.size(), -1);
+        return solve(s, 0, memo);
+    }
+
+private:
+    int solve(string& s, int i, vector<int>& memo) {
+        // Base Case 1: If we reached the end, we found 1 valid path
+        if (i == s.size()) return 1;
+
+        // Base Case 2: If current char is '0', this path is invalid (dead end)
+        if (s[i] == '0') return 0;
+
+        // CHECK MEMO
+        if (memo[i] != -1) return memo[i];
+
+        // Option A: Take 1 digit (Always valid here since we passed the '0' check)
+        int res = solve(s, i + 1, memo);
+
+        // Option B: Take 2 digits (Check if it's between 10 and 26)
+        if (i + 1 < s.size()) {
+            if (s[i] == '1' || (s[i] == '2' && s[i+1] <= '6')) {
+                res += solve(s, i + 2, memo);
+            }
+        }
+
+        return memo[i] = res;
+    }
+};
+
+```
+
+**Key Takeaway:**
+Always check for `'0'` first! In this problem, `'0'` is a trap. It cannot stand alone, so if you encounter it at the start of your current chunk, that path returns 0 immediately.
