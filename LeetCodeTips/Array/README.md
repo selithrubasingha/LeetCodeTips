@@ -175,4 +175,51 @@ public:
 - For the `freq` why didn't we use a unordered_map ? because it is unordered ! Here we use a vector which is indexed (and that is useful here) to get certain values . 
 - Maybe for some other problems , two unordered_maps can be used as well ...
 
+## Product of array except self 
 
+- Given an integer array nums, return an array output where output[i] is the product of all the elements of nums except nums[i].
+
+Each product is guaranteed to fit in a 32-bit integer.
+
+Follow-up: Could you solve it in 
+O(n) time without using the division operation?
+
+
+**Hint :** This is where you should use the technique of prefix and suffix ! you maintain memory of the arraya before each reveiwing element (kind of ).
+
+- Of course if we were to use division this would be a piece of cake  !
+
+```C++
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> preffix(n,1);
+        vector<int> suffix(n,1);
+
+        int p = nums[0];
+
+        for (int i = 1 ; i< n ; i++){
+            preffix[i] = p ; 
+            p*= nums[i];
+
+        }
+
+        int s = nums[n-1];
+
+        for (int i = n-2 ; i>=0 ;i--){
+            suffix[i] = s;
+            s*= nums[i];
+        }
+
+        vector<int> ans  ; 
+
+        for (int i = 0 ; i <n ; i++){
+            ans.push_back(preffix[i]*suffix[i]);
+        }
+
+        return ans;
+        
+    }
+};
+```
