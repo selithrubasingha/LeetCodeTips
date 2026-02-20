@@ -59,3 +59,37 @@ public:
     }
 };
 ```
+
+## Two Sum 
+
+- I mean this is the most popular problem on leet code , does this question even need and explanation ?
+
+- Use a hashmap and take the `diff` and see if it is in the map . 
+
+
+```C++
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+
+        unordered_map<int,int> map ; 
+
+        int n = nums.size();
+
+        for (int i = 0 ; i < n ; i++){
+            int diff = target - nums[i];
+
+            if (map.contains(diff)){
+                return {map[diff],i};
+            }
+
+            map[nums[i]] = i ; 
+        }
+
+        return {};
+
+
+        
+    }
+};
+```
