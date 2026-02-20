@@ -133,3 +133,46 @@ public:
     }
 };
 ```
+
+## Top K frequent elements 
+
+Given an integer array nums and an integer k, return the k most frequent elements within the array.
+
+**Hint :** Use the legendary bucket sort technique ! instead of number as key and count as value .... why not make it count as key a list of numbers which have the same count as the values ? Basically the same idea as in the Group Anagrams in a way . 
+
+``` C++
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+
+        int n = nums.size();
+        unordered_map<int,int> count ; 
+        vector<vector<int>> freq(nums.size() + 1);
+
+        for (int n  : nums){
+            count[n]++;
+        }
+
+        for (const auto& pair : count){
+            freq[pair.second].push_back(pair.first);
+
+        }
+
+        vector<int> res;
+
+        for (int i = n ; i>=0 ; i--){
+            for (int j : freq[i]){
+                res.push_back(j);
+                
+                if (res.size()==k) return res ; 
+            }
+        }
+
+        return res;
+
+```
+
+- For the `freq` why didn't we use a unordered_map ? because it is unordered ! Here we use a vector which is indexed (and that is useful here) to get certain values . 
+- Maybe for some other problems , two unordered_maps can be used as well ...
+
+
