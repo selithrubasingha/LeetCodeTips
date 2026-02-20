@@ -93,3 +93,43 @@ public:
     }
 };
 ```
+
+## Group Anagram 
+
+- Given an array of strings strs, group all anagrams together into sublists. You may return the output in any order.
+
+**Hint :** You will need to use a hashmap , normally we use the string as the key and as the value , the count of chars ... But htis time we reverse it ! The strings are the values and vice versa , By doing this this we can group the anagrams together ! The power of the hasmap is unmatched . 
+
+
+```C++ 
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        
+        unordered_map<string,vector<string>> res ; 
+
+        for (const auto& s : strs){
+            vector<int> count(26,0);
+            for (char c : s){
+                count[c-'a']++;
+            }
+
+            string key = to_string(count[0]);
+
+            for (int i = 1 ; i <26 ; i++){
+                key += ','+to_string(count[i]);
+            }
+
+            res[key].push_back(s);
+        }
+
+        vector<vector<string>> result ; 
+        for (const auto& pair : res){
+            result.push_back(pair.second);
+        }
+
+        return result ; 
+        
+    }
+};
+```
