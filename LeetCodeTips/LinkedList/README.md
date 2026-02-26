@@ -74,6 +74,35 @@ public:
 };
 ```
 
+## Linked list Cycle
 
+### The legendary Floyd's tortoise and hare algorithm
+
+* Imagine two racers in a track , ONe is fast and the other is slow 
+* if they start at the same place in the circular track and have the same speed 
+* It is garanteed that the fast guy will meet the slow guy again ... because "he so fast that he made a gap of 1 circular track !"
+* That is what this algorithm does ... It has two pointers fast and slow , slow is incremented once and fast is incremented twice . if the Linked list has a cycle it is guranteed that slow node will be equal to fast node at some point . 
+* If the fast node reached null ... That means the linked list was not circular.
+
+```C++
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while ( fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+
+            if (slow == fast) return true;
+        } 
+
+        return false;
+
+        
+    }
+};
+```
 
   
