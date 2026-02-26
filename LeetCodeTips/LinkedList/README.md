@@ -5,4 +5,28 @@
 
 ## Reverse Linked List
 
+- reverse all the links in the list one node by node . 
+
+```C++
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+
+        ListNode* prev = nullptr;
+        ListNode* curr = head;
+
+        while (curr){
+            ListNode* nxt = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nxt;
+
+        }
+
+        return prev;
+        
+    }
+};
+```
+
   
