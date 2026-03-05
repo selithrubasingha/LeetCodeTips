@@ -65,3 +65,37 @@ public:
     }
 };
 ```
+
+## Daily Temperatures
+
+- This question feels like you need to have memory of previous days , when compared to the day we are lookig at . 
+- It takes a while to understand that this is a stack question  .
+- The main thing ... while we are iterating through the array . the answer array is not filled in teh same pace (speed)
+
+- we need to use a Monotonically Decreasing Stack ... the stack is always decreasing 
+
+Logic :
+- While we are iterating through the array , 
+  - if the item we are checking is smaller then the top of the stack . we just add it to teh stack 
+  - if it is larger ! we clean out all the items at the top of the stack , where the items are smaller then than the item at hand. BUT WAIT ! while we are doing this , we update the answer array as well ... so to do that we need to store the index of the items in teh stack as well ... better use a pair .
+
+```C++
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        vector<int> res(temperatures.size(), 0);
+        stack<pair<int, int>> stack; // pair: {temp, index}
+
+        for (int i = 0; i < temperatures.size(); i++) {
+            int t = temperatures[i];
+            while (!stack.empty() && t > stack.top().first) {//first -> ][0]
+                auto pair = stack.top();
+                stack.pop();
+                res[pair.second] = i - pair.second;
+            }
+            stack.push({t, i});
+        }
+        return res;
+    }
+};
+```
