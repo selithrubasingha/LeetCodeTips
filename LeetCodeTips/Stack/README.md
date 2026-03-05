@@ -33,3 +33,35 @@ public:
     }
 };
 ```
+
+## Min Stack
+
+- A simple minstack implementation 
+
+```C++
+class MinStack {
+
+private:
+    vector<int> buffer;
+public:
+    MinStack() {
+    }
+    
+    void push(int val) {
+        buffer.push_back(val);
+        
+    }
+    
+    void pop() {
+        buffer.pop_back();
+    }
+    
+    int top() {
+        return buffer.back();
+    }
+    
+    int getMin() {
+        return *std::min_element(buffer.begin(), buffer.end());
+    }
+};
+```
