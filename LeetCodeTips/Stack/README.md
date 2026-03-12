@@ -30,3 +30,44 @@ public:
     }
 };
 ```
+
+## Min Stack
+
+*  A normal generic stack . nothing particularly interesting here...
+
+```c++
+class MinStack {
+
+private:
+    vector<int> buffer;
+public:
+    MinStack() {
+    }
+    
+    void push(int val) {
+        buffer.push_back(val);
+        
+    }
+    
+    void pop() {
+        buffer.pop_back();
+    }
+    
+    int top() {
+        return buffer.back();
+    }
+    
+    int getMin() {
+        return *std::min_element(buffer.begin(), buffer.end());
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(val);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
+```
