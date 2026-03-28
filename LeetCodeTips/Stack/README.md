@@ -161,3 +161,70 @@ public:
     }
 };
 ```
+
+## Car Fleet
+
+_There are n cars at given miles away from the starting mile 0, traveling to reach the mile target._
+
+_You are given two integer arrays position and speed, both of length n, where position[i] is the starting mile of the ith car and speed[i] is the speed of the ith car in miles per hour._
+
+_A car cannot pass another car, but it can catch up and then travel next to it at the speed of the slower car._
+
+_A car fleet is a single car or a group of cars driving next to each other. The speed of the car fleet is the minimum speed of any car in the fleet._
+
+_If a car catches up to a car fleet at the mile target, it will still be considered as part of the car fleet._
+
+_Return the number of car fleets that will arrive at the destination._
+
+- what type of stack should we use for this ? we should use a stack to store the time every fleet of cars comes .... so that stack will become a monotonically increasing stack of times ! 
+- Once you read the logic ... you'll remember what to do .
+
+```C++
+class Solution {
+public:
+    int carFleet(int target, vector<int>& position, vector<int>& speed) {
+
+        vector<pair<int,int>> input ;
+
+        int n = position.size();
+
+        for (int i=0; i<n ; i++){
+            input.push_back({position[i],speed[i]});
+        }
+
+        sort(input.rbegin(),input.rend());
+
+    //my way
+        stack<double> st ;
+        st.push((double)(target - input[0].first) / input[0].second);
+
+        for (int i = 1; i<n ; i++){
+            double time = (double)(target - input[i].first) / input[i].second;
+
+            if (st.top()<time){
+                st.push(time);
+            }
+        }
+    // my way
+
+        return st.size();
+
+        
+        
+    }
+};
+
+```
+
+- Instead of `my way`. you can also do this ...
+
+```C++
+        for (auto& p : pair) {
+                    stack.push_back((double)(target - p.first) / p.second);
+                    if (stack.size() >= 2 &&
+                        stack.back() <= stack[stack.size() - 2])
+                    {
+                        stack.pop_back();
+                    }
+                }
+```
