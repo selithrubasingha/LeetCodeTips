@@ -214,3 +214,48 @@ public:
     }
 };
 ```
+
+## Sliding Window Maximum
+
+_You are given an array of integers nums and an integer k. There is a sliding window of size k that starts at the left edge of the array. The window slides one position to the right until it reaches the right edge of the array._
+
+_Return a list that contains the maximum element in the window at each step._
+
+Intuition :
+    - the inefficient way is to find the maximum every single time ...
+    - but instead we find the maximum in the left half first part and then , on keep track of the maximum from then onwards ...?? 
+
+```C++
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<int> output(n-k+1);
+        deque<int> q;
+        int l = 0, r=0;
+
+        while (r<n){
+            while (!q.empty() && nums[q.back()] < nums[r]){
+                q.pop_back();
+            }
+
+            q.push_back(r);
+
+            if (l>q.front()){
+                q.pop_front();
+            }
+
+            if ((r-l+1)>=k){
+                
+                output[l] = nums[q.front()];
+                l++;
+            }
+
+            r++;
+        }
+
+        return output;
+        
+    }
+};
+```
