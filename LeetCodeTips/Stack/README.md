@@ -71,3 +71,57 @@ public:
  * int param_4 = obj->getMin();
  */
 ```
+
+## Evaluate Reverse Polish Notation
+
+- just use a stack ... when iterating through the list , if an int is found , add it to the stack and if the operator is found , pop two items ... perform the operation and add the answer to the stack again .
+- The answer is the final value in the stack . 
+
+```C++
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int> st;
+        int ans ;
+
+        for (string& token : tokens){
+            
+
+            if (token=="+"){
+                int x = st.top();
+                st.pop();
+                int y = st.top();
+                st.pop();
+                st.push(x+y);
+            }else if (token=="-"){
+                int x = st.top();
+                st.pop();
+                int y = st.top();
+                st.pop();
+                st.push(y-x);
+            }else if (token=="*"){
+                int x = st.top();
+                st.pop();
+                int y = st.top();
+                st.pop();
+                st.push(x*y);
+            }else if (token=="/"){
+                int x = st.top();
+                st.pop();
+                int y = st.top();
+                st.pop();
+                st.push(y/x);
+            }else{
+                st.push(stoi(token));
+            }
+
+
+            
+        }
+
+        return st.top();
+        
+        
+    }
+};
+```
