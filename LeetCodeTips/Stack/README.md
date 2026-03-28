@@ -228,3 +228,42 @@ public:
                     }
                 }
 ```
+
+## Largest Rectangle in a Histogram
+
+- This is similar to Daily temperature in a sense that theMaxArea calculation is not done incrementally (linearly?) . 
+- stack stores the index and the heght ... when items are poped that is when the maxArea is calculated ... this does not index store the current index but the index extends backwards . 
+
+```C++
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+
+        heights.push_back(0);
+        int maxArea = 0;
+        stack<pair<int,int>> st;
+
+        int n= heights.size();
+
+        for (int i = 0 ; i <n ; i ++){
+            int start = i;
+
+            int h = heights[i];
+
+            while (!st.empty() && st.top().second>h){
+                int index = st.top().first;
+                int height = st.top().second;
+                st.pop();
+                maxArea = max(maxArea , (i-index)*height);
+                start = index;
+            }
+
+            st.push({start,h});
+
+        }
+
+        return maxArea;
+        
+    }
+};
+```
