@@ -121,3 +121,37 @@ public:
     }
 };
 ```
+
+## Container with the most Rain Water
+
+- `l = 0 ; r = n-1; while l<r ` type question . 
+- we alway decre.. or increment the short height one . it will always work in this case
+
+```C++
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int l = 0 ;
+        int r = height.size()-1;
+        int width;
+        int area = 0;
+
+
+        while (l<r){
+            width = r-l;
+
+            area = max(area , width * min(height[l],height[r]));
+
+            if (height[l]<height[r])
+                l++;
+            else
+                r--;
+
+
+        }
+
+        return area;
+        
+    }
+};
+```
