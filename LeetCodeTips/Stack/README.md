@@ -125,3 +125,39 @@ public:
     }
 };
 ```
+
+## Daily temperatures 
+
+- This is a interesting question . The trick is to use a monotincally decreasing stack (the items on the top of the stack are always smaller)
+- when we iterate through the list ... if we meet a larger number ... then we pop stuff from stack while simultaneiously updating the answer on the answer vector . and once that large number can be added on the top of the stack  , then it is added
+- You must remember that filling the answer vector with answers in each indices is not always linear ... that is what makes this question special .
+
+```C++
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        stack<pair<int,int>> st; // monotonically decreasing stack !
+        int n = temperatures.size();
+        vector<int> ans(n,0);
+
+        for (int i = 0 ; i < n ; i++){
+            int item = temperatures[i];
+
+            
+                //while item is larger than the top of the stack
+                //update the answer and pop from the stack !
+
+                while ( !st.empty() && item> st.top().first){
+                    ans[st.top().second] = i-st.top().second;
+                    st.pop();
+                }
+
+                st.push({item,i});
+            
+        }
+
+        return ans;
+        
+    }
+};
+```
