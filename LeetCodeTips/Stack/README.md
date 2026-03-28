@@ -267,3 +267,13 @@ public:
     }
 };
 ```
+
+
+# Common patterns I noticed
+
+- most questions : structure is ,
+    1. you have list , you looop through it
+    2. add or stuff to your sttack while looping
+    3. most often we check if the current num were looking is either greater or larger than the top of the stack value and we perform the logic .
+    4. modification of this pattern is there for certain problems
+
