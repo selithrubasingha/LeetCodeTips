@@ -212,4 +212,43 @@ public:
 };
 ```
 
+## Copy List with Random Pointer
+
+_A linked list of length n is given such that each node contains an additional random pointer, which could point to any node in the list, or null.Construct a deep copy of the list._
+
+- Just make the nodes first . and map them into a hashmap ... them connect them around all the next and random pointers !
+
+```C++
+
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+
+        unordered_map<Node* , Node* > mapper;
+        mapper[NULL] = NULL;
+
+        Node* curr = head;
+
+        while (curr!=NULL){
+            Node* copy = new Node(curr->val);
+            mapper[curr] = copy;
+            curr = curr->next;
+        }
+
+        curr = head;
+
+        while (curr!=NULL){
+            Node* copy = mapper[curr];
+            copy->next = mapper[curr->next];
+            copy->random = mapper[curr->random];
+            curr = curr->next;
+        }
+
+        return mapper[head];
+
+        
+    }
+};
+```
+
   
