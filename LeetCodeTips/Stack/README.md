@@ -136,6 +136,7 @@ public:
 class Solution {
 public:
     vector<int> dailyTemperatures(vector<int>& temperatures) {
+        
         stack<pair<int,int>> st; // monotonically decreasing stack !
         int n = temperatures.size();
         vector<int> ans(n,0);
