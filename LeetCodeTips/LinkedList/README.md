@@ -251,4 +251,41 @@ public:
 };
 ```
 
+## Add Two Numbers
+
+_You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list._
+
+- Dude ! remember how we used to calculate additions in pre school ? yeah ! we do the exact same logic here ... they even made it easier for us by giving the linked lists reversed !
+
+```C++
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+
+        unordered_map<Node* , Node* > mapper;
+        mapper[NULL] = NULL;
+
+        Node* curr = head;
+
+        while (curr!=NULL){
+            Node* copy = new Node(curr->val);
+            mapper[curr] = copy;
+            curr = curr->next;
+        }
+
+        curr = head;
+
+        while (curr!=NULL){
+            Node* copy = mapper[curr];
+            copy->next = mapper[curr->next];
+            copy->random = mapper[curr->random];
+            curr = curr->next;
+        }
+
+        return mapper[head];
+
+        
+    }
+};
+```
   
