@@ -105,4 +105,65 @@ public:
 };
 ```
 
+## Reorder list
+
+*You are given the head of a singly linked-list. The list can be represented as:*
+
+
+`_L0 → L1 → … → Ln - 1 → Ln_`
+
+_Reorder the list to be on the following form:_
+
+`_L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …_`
+
+_You may not modify the values in the list's nodes. Only nodes themselves may be changed._
+
+- Bruh ... you basically need to use the knowledge of the 3 questions before 
+- first , use tortoisse and hare to find the middle of the linked list
+- second , cut the linked list in half and reverse the second linked list
+- third , merge the two linked lists .
+
+```C++
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        //find the middle (using tortoise and hare)
+        while ( fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        } 
+
+        ListNode* second = slow->next;
+
+        ListNode* first = head;
+        ListNode* prev = slow->next =nullptr;
+
+        //reversing  the second linked list
+        while (second){
+            ListNode* nxt = second->next;
+            second->next = prev;
+            prev = second;
+            second = nxt;
+
+        }
+
+        
+        //merging 
+        second = prev;
+        while (second != nullptr) {
+            ListNode* tmp1 = first->next;
+            ListNode* tmp2 = second->next;
+            first->next = second;
+            second->next = tmp1;
+            first = tmp1;
+            second = tmp2;
+        }
+   
+    }
+};
+```
+
   
