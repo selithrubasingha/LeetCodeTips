@@ -288,4 +288,51 @@ public:
     }
 };
 ```
+
+## Find the Duplicate Number
+
+_Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive._
+
+_There is only one repeated number in nums, return this repeated number._
+
+- This might be the most uintuitive hardest question in a linked list 
+
+- The thing is ... this vector nums acts like a liked list 
+    - the index is like the val 
+    - the value inside the nums is like the index of the next node
+    - we can use the tortoise and hare algorithm to meet at some palce (let's say P)
+
+- Here is the unintuitive part ! the if we travel from P and from the start at the same pace with two pointers . 
+- The two pointers meet at some place ... THE PLACE WHERE THEY MEET IS THE PLACE WHERE THE DUPLICATE IS !!!
+(don't ask me how it's just math you can prove it yourself)
+
+```C++
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int slow = 0;
+        int fast = 0;
+
+        while (true){
+            fast = nums[nums[fast]];
+            slow = nums[slow];
+
+            if (fast==slow){
+                break;
+            }
+        }
+
+        int slow2 = 0;
+
+        while (true){
+            slow = nums[slow];
+            slow2 = nums[slow2];
+            if (slow == slow2){
+                return slow;
+            }
+        }
+        
+    }
+};
+```
   
