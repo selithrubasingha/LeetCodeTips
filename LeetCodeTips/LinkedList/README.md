@@ -166,4 +166,50 @@ public:
 };
 ```
 
+## Remove a Node from the end of a list
+
+- The problem with linked lists is ... we don't know what the length of a linked list is , so how do we remove from the end of the node ?
+
+- Well , it is quite a common pattern to use the tortoise and hare type pointers to do the traversal .
+
+- We shift the fast pointer n times while the slow pointer is at the head ... and increment the pointers until the fast pointer becomes NULL 
+
+- but we do not need to reach the node that is to delete! but we need to reach the one before it ! 
+
+- For this we use the legendary technique known as the dummy node technique , which get rid of edge cases also .
+
+```C++
+
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+
+        ListNode dummy(0);
+        dummy.next = head;
+
+        int count = 0 ;
+        ListNode* fast = &dummy;
+        ListNode* slow = &dummy;
+
+
+        while (count < n){
+            fast = fast->next;
+            count++;
+            
+        }
+
+        while (fast && fast->next){
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        ListNode* newnxt = slow->next ? slow->next->next : slow->next;;
+        slow->next = newnxt;
+
+        return dummy.next;
+        
+    }
+};
+```
+
   
