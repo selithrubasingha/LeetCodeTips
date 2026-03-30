@@ -125,3 +125,47 @@ public:
 };
 ```
 
+## Find Minimum in Rotated Sorted Array
+
+- Array is rotated ! it is super to find how many times it is rotated using linear search .
+- But we need to do binary search . 
+
+- This is not your typical left , right , mid binary search  . There is a few things we need to add. 
+
+- Array is rotated ! it is super to find how many times it is rotated using linear search .
+- But we need to do binary search . 
+
+- This is not your typical left , right , mid binary search  . There is a few things we need to add. 
+
+1. Every time we visit a mid index ... we set res and the min . 
+2. Then if `nums[mid] < nums[l]` : `search left`; else : `search right`
+
+```C++
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int l = 0 ;
+        int r = nums.size()-1;
+        int res = nums[0];
+
+        while (l<=r){
+            if (nums[l]<nums[r]){
+                res = min (res , nums[l]);
+                break;
+            }
+            int mid = l + (r-l)/2;
+            res = min(res,nums[mid]);
+
+            if (nums[l]<=nums[mid]){
+                
+                l = mid+1;
+            }else {
+                r = mid-1;
+            }
+        }
+
+        return res;
+        
+    }
+};
+```
