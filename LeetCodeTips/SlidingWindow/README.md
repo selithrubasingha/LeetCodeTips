@@ -156,3 +156,106 @@ public:
     }
 };
 ```
+
+## Minimum Window Substring
+
+- _Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string ""._
+
+_The testcases will be generated such that the answer is unique._
+
+- The intuitive way is to take two hashmaps and see if they are equal each time (hash maps of char counts ...)
+- Rather me make two integers and they represent the difference of characters from what the answer has rn and what the answer needs to have . 
+```C++
+class Solution {
+public:
+    string minWindow(string s, string t) {
+
+        if (t.empty()) return "";
+
+        unordered_map<char,int> countT , window ; 
+
+        for (char c : t){
+            countT[c]++;
+        }
+
+        int have = 0;
+        int need = countT.size();
+        pair<int,int> res = {-1,-1};
+        int resLen = INT_MAX;
+        int l = 0;
+
+        for (int r = 0 ; r< s.length(); r++){
+            char c = s[r];
+            window[c]++;
+
+            if (countT.count(c) && window[c]==countT[c]) have++;
+
+            while (have == need){
+                if ((r-l+1)<resLen){
+                    resLen = r-l +1;
+                    res = {l,r};
+                }
+
+                window[s[l]]--;
+                if (countT.count(s[l]) && window[s[l]] < countT[s[l]]){
+                    have--;
+                }
+
+                l++;
+            }
+        }
+
+
+        return resLen == INT_MAX ? "" : s.substr(res.first , resLen);
+
+
+
+        
+    }
+};
+```
+
+## Sliding Window Maximum
+
+_You are given an array of integers nums and an integer k. There is a sliding window of size k that starts at the left edge of the array. The window slides one position to the right until it reaches the right edge of the array._
+
+_Return a list that contains the maximum element in the window at each step._
+
+Intuition :
+    - the inefficient way is to find the maximum every single time ...
+    - but instead we find the maximum in the left half first part and then , on keep track of the maximum from then onwards ...?? 
+
+```C++
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<int> output(n-k+1);
+        deque<int> q;
+        int l = 0, r=0;
+
+        while (r<n){
+            while (!q.empty() && nums[q.back()] < nums[r]){
+                q.pop_back();
+            }
+
+            q.push_back(r);
+
+            if (l>q.front()){
+                q.pop_front();
+            }
+
+            if ((r-l+1)>=k){
+                
+                output[l] = nums[q.front()];
+                l++;
+            }
+
+            r++;
+        }
+
+        return output;
+        
+    }
+};
+```

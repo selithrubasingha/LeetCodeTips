@@ -121,3 +121,112 @@ public:
     }
 };
 ```
+
+## Container with the most Rain Water
+
+- `l = 0 ; r = n-1; while l<r ` type question . 
+- we alway decre.. or increment the short height one . it will always work in this case
+
+```C++
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int l = 0 ;
+        int r = height.size()-1;
+        int width;
+        int area = 0;
+
+
+        while (l<r){
+            width = r-l;
+
+            area = max(area , width * min(height[l],height[r]));
+
+            if (height[l]<height[r])
+                l++;
+            else
+                r--;
+
+
+        }
+
+        return area;
+        
+    }
+};
+```
+
+## Trapping Rain water
+
+- Might be the hardest question in the history of the universe ? 
+- This isn't necessarily a two pointer problem ... it is prefix suffix problem IMO .
+
+### Method 01
+
+```C++
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n = height.size();
+        if (n == 0) {
+            return 0;
+        }
+
+        vector<int> leftMax(n);
+        vector<int> rightMax(n);
+
+        leftMax[0] = height[0];
+        for (int i = 1; i < n; i++) {
+            leftMax[i] = max(leftMax[i - 1], height[i]);
+        }
+
+        rightMax[n - 1] = height[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            rightMax[i] = max(rightMax[i + 1], height[i]);
+        }
+
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            res += min(leftMax[i], rightMax[i]) - height[i];
+        }
+        return res;
+    }
+};
+```
+- we do this because to know how much water can be stored we need to know in advance whether there are walls at the right of left .
+
+## Method 02
+- This uses the same logic but also does neat tricks to make the space complexity o(!) using two pointers .
+
+```C++
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if (height.empty()) {
+            return 0;
+        }
+        int l =0;
+        int r = height.size()-1;
+        int leftMax = height[l];
+        int rightMax = height[r];
+        int res=0;
+
+        while (l<r){
+            if (leftMax<rightMax){
+                l++;
+                leftMax=max(leftMax , height[l]);
+                res+= leftMax - height[l];
+            }else{
+                r--;
+                rightMax=max(rightMax , height[r]);
+                res+= rightMax - height[r];
+
+            }
+        }
+
+
+        return res;
+        
+    }
+};
+```
