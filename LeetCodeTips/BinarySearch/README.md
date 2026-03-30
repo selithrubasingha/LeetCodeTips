@@ -76,3 +76,52 @@ public:
     }
 };
 ```
+
+## Koko Eating Bananas
+
+_You are given an integer array piles where piles[i] is the number of bananas in the ith pile. You are also given an integer h, which represents the number of hours you have to eat all the bananas._
+
+_You may decide your bananas-per-hour eating rate of k. Each hour, you may choose a pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, you may finish eating the pile but you can not eat from another pile in the same hour._
+
+_Return the minimum integer k such that you can eat all the bananas within h hours._
+
+- You can't actually see it's binary search ... but look , the maximum hours it can take is the len of the pile where the eating speed the value of the maximum item of the pile (X). 
+- So the eating speed is bounded ! between (1 and X) .
+- You will have to do the "How many hours ?" logic
+
+```C++
+            long long totalTime = 0;
+            for (int p : piles) {
+                totalTime += ceil(static_cast<double>(p) / k);
+            }
+```
+
+here is the full code 
+
+```C++
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int l = 1;
+        int r = *max_element(piles.begin(), piles.end());
+        int res = r;
+
+        while (l <= r) {
+            int k = (l + r) / 2;
+
+            long long totalTime = 0;
+            for (int p : piles) {
+                totalTime += ceil(static_cast<double>(p) / k);
+            }
+            if (totalTime <= h) {
+                res = k;
+                r = k - 1;
+            } else {
+                l = k + 1;
+            }
+        }
+        return res;
+    }
+};
+```
+
