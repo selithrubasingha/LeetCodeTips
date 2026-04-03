@@ -260,3 +260,11 @@ public:
     }
 };
 ```
+
+## Median of Two Sorted Arrays
+
+- Probably the hardest question in BInary search (must refer the video later)
+
+```C++
+
+```
