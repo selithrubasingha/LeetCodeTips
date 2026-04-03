@@ -317,3 +317,55 @@ vector<vector<int>> memo;
     }
 };
 ```
+
+## Edit Distance
+
+- Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.
+
+- You have the following three operations permitted on a word:
+
+    - Insert a character
+    - Delete a character
+    - Replace a character
+
+- Use a DP grid! if we use top down approach , the left , top and top-left represents insert , replace and delete . 
+
+- if the current chars are equal , we just get the replace amount only , and if not equal , we get 1+minimum of the three possible ways .
+
+```C++
+class Solution {
+public:
+    int minDistance(string word1, string word2) {
+        int n = word1.size();
+        int m =word2.size();
+
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+
+        for (int i = 0; i<=n;i++){
+            dp[i][0]=i;
+        }
+
+        for (int i = 0; i<=m;i++){
+            dp[0][i]=i;
+        }
+
+        for (int i = 0;i<n; i++){
+
+            for (int j =0; j<m; j++){
+                if (word1[i]==word2[j]){
+                    dp[i+1][j+1] = dp[i][j];
+                }else{
+                    dp[i+1][j+1] = 1+min(min(dp[i][j+1],dp[i+1][j]),dp[i][j]);
+                }
+            }
+        }
+
+        return dp[n][m];
+
+
+        
+    }
+
+    
+};
+```
