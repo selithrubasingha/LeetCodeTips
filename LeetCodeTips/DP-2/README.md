@@ -230,4 +230,48 @@ public:
         }` the `!res` is important ! 
 
 
+## Longest Increasing Path in Matrix
 
+- In the unique paths problem ... we went down or right , BUT IN THIS QUESTION , we go all 4 directions .
+
+- we keep a `prevVal` variable to store what the previous value in the recursive call is , if the `curVal > prevVal` we consider it added to the length of the path we are finding . 
+
+- Also note that in the code , we call the recursive function for ALL the values ! although the memoization helps with the time complexity  .
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> dp;
+
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        int ROWS = matrix.size(), COLS = matrix[0].size();
+        dp = vector<vector<int>>(ROWS, vector<int>(COLS, -1));
+        int LIP = 0;
+
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < COLS; c++) {
+                LIP = max(LIP, solve(matrix, r, c, INT_MIN));
+            }
+        }
+        return LIP;
+        
+    }
+
+    int solve(vector<vector<int>>& matrix, int i , int j , int prevVal){
+        int n = matrix.size();
+        int m = matrix[0].size();
+        if (i>=n || i<0 || j>=m || j<0 || matrix[i][j] <= prevVal) return 0;
+
+        if (dp[i][j]!=-1) return dp[i][j];
+
+        int res = 1;
+        res = max(res , 1+ solve(matrix , i+1,j,matrix[i][j]));
+        res = max(res , 1+ solve(matrix , i-1,j,matrix[i][j]));
+        res = max(res , 1+ solve(matrix , i,j+1,matrix[i][j]));
+        res = max(res , 1+ solve(matrix , i,j-1,matrix[i][j]));
+
+        dp[i][j] = res;
+        return res;
+    }
+};
+```
