@@ -275,3 +275,45 @@ public:
     }
 };
 ```
+
+## Distinct Subsequences
+
+_Given two strings s and t, return the number of distinct subsequences of s which equals t._
+
+- A variation of the 0/1 knapsack problem . you either select current value , or you don't ! 
+- Actually ,if the chars are equal you the two options , if they are not equal , they have one option 
+
+```C++
+class Solution {
+public:
+vector<vector<int>> memo;
+    int numDistinct(string s, string t) {
+        int n = s.length();
+        int m = t.length();
+
+        memo.assign(n+1,vector<int>(m+1,-1));
+
+        return solve(0,0,s,t);
+        
+    }
+
+    int solve(int i , int j , string&  s, string& t){
+        int n = s.length();
+        int m = t.length();
+
+        if (j==m ) return 1;
+        if (i==n ) return 0;
+
+        if (memo[i][j]!=-1) return memo[i][j];
+
+        int ways = solve(i+1,j,s,t);
+
+        if (s[i]==t[j]){
+            ways+= solve(i+1,j+1,s,t);
+        }
+
+        memo[i][j] = ways;
+        return ways;
+    }
+};
+```
