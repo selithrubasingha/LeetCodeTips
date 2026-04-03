@@ -105,3 +105,50 @@ public:
 };
 ```
 
+## Coin Change II
+
+- There are a few variations of the legendary coin change problem 
+
+1. can we get answer ?(ans is a `boolean`) [coins can be uses ANY number of times]
+2. can we get answer ?(ans is a `boolean`) [each coin can be used  only one time]
+3. How many answer can we get ? (ans is an `int`) [coins can be uses ANY number of times]
+4. How many answer can we get ? (ans is an `int`) [each coin can be used  only one time]
+
+- Coin Change II is actually the 3rd one .
+
+```C++
+class Solution {
+public:
+    int change(int amount, vector<int>& coins) {
+        int n = coins.size();
+
+        vector<vector<int>>  memo(amount+1 ,vector<int> (n+1,-1));
+
+        return solve(amount , coins , 0 , memo);
+        
+    }
+
+    int solve(int amount, vector<int>& coins,int startIndex , vector<vector<int>> & memo){
+        int n = coins.size();
+
+        if (amount==0) return 1;
+        if (amount<=0) return 0;
+
+        if (memo[amount][startIndex]!=-1) return memo[amount][startIndex];
+
+        int total = 0 ;
+
+        for (int i = startIndex ; i < n ; i++){
+            total += solve(amount-coins[i], coins , i , memo);
+
+        }
+
+        memo[amount][startIndex] = total;
+
+        return total;
+    }
+};
+
+```
+
+if you were asked the 4th variation of the question . change `total += solve(amount-coins[i], coins , i , memo)` to `total += solve(amount-coins[i], coins , i+1 , memo)`.
