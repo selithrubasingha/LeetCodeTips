@@ -63,3 +63,45 @@ public:
 };
 ```
 
+## Best Time to Buy and Sell Stock with Cooldown
+
+- What makes this question interesting is that , this clearly shows the two variable thiing , and one of them is a boolean ! . s o depending on that boolean , the logic inside  the recusion may need to be changed . (using a if statement maybe)
+
+```C++
+class Solution {
+public:
+    unordered_map<string, int> dp;
+
+
+    int maxProfit(vector<int>& prices) {
+        return solve(0 , true ,prices);
+        
+    }
+
+    int solve(int i , bool buying,vector<int>& prices){
+        int n = prices.size();
+
+        if (i>=n) return 0;
+
+        string key = to_string(i) + "-" + to_string(buying);
+        if (dp.find(key) != dp.end()) {
+            return dp[key];
+        }
+
+
+        int cooldown = solve(i+1 , buying , prices);
+        if (buying){
+            int buy = solve(i+1, false , prices) - prices[i];
+            dp[key] = max(cooldown , buy);
+        }else{
+            int sell = solve(i+2 , true , prices)+ prices[i];
+            dp[key] = max(cooldown , sell);
+        }
+
+        return dp[key];
+
+
+    }
+};
+```
+
