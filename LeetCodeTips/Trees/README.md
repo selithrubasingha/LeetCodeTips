@@ -217,3 +217,49 @@ public:
     }
 };
 ```
+
+## Binary Tree Right Side View
+
+- In a way , if you think about it , we already made a list of all all the levels in the prev question ,
+- If we just add the last element in all of 'em . we get the right side view . 
+
+```c++
+
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root) {
+        if (!root) return {};
+
+        vector<int> ans;
+
+        queue<TreeNode*> q;
+
+        q.push(root);
+
+        while (!q.empty()){
+            int n =q.size();
+            vector<int> temp;
+
+            for (int i = 0 ; i < n; i++){
+                TreeNode* curr = q.front();
+                q.pop();
+
+                //do something
+                temp.push_back(curr->val);
+
+                if (curr->left)
+                    q.push(curr->left);
+                if (curr->right)
+                    q.push(curr->right);
+
+            }
+
+            ans.push_back(temp[n-1]);
+            
+        }
+
+        return ans;
+        
+    }
+};
+```
