@@ -106,3 +106,37 @@ public:
     }
 };
 ```
+
+## Subtree of Another Tree
+
+
+```c++
+class Solution {
+public:
+    bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+        if (!root) return false;
+
+        if (isSameTree(root , subRoot)) return true;
+
+        int left = isSubtree(root->left , subRoot);
+        int right = isSubtree(root->right , subRoot);
+
+        return (left||right);
+        
+
+        
+    }
+
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if (!p && !q) return true;
+        else if ((!p && q) || (p && !q)) return false;
+
+        if (p->val != q->val) return false;
+
+        bool ans = isSameTree(p->left,q->left) && isSameTree(p->right,q->right) ;
+
+        return ans;
+        
+    }
+};
+```
