@@ -263,3 +263,34 @@ public:
     }
 };
 ```
+
+## Count Good Nodes in Binary Tree
+
+- we just keep track of the largest element and the parental nodes above .
+ _Given a binary tree `root`, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X._
+
+ ```c++
+
+class Solution {
+public:
+    int goodNodes(TreeNode* root) {
+
+        return dfs(root,root->val);
+        
+    }
+
+    int dfs(TreeNode* root, int largest){
+       if (!root) return 0;
+
+       int ans = 0;
+
+       if (root->val>=largest){
+            ans = 1;
+       }
+
+       ans+=dfs(root->left , max(largest,root->val))+dfs(root->right,max(largest,root->val));
+
+       return ans;
+    }
+};
+ ```
