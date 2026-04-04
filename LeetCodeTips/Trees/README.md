@@ -41,6 +41,8 @@ public:
 
 ## Diameter of Binary Tree
 
+- diameter is the max path along the tree nodes ? it might even go through the tree node . that is why th `int sub` is used .
+
 ```C++
 class Solution {
 public:
@@ -64,6 +66,8 @@ public:
 ```
 
 ## Balanced Binary Tree
+
+- In every node each subtree must have equal or differ by 1 heights .
 
 ```C++
 class Solution {
@@ -109,6 +113,7 @@ public:
 
 ## Subtree of Another Tree
 
+- for each node in main tree ... check the equality with the subtree,
 
 ```c++
 class Solution {
