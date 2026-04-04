@@ -361,3 +361,32 @@ public:
 };
 
  ```
+
+ ## Construct Binary Tree from Preorder and Inorder Traversal
+
+ - We are given the preorder and inorder traversals .... how are we going to create the actual tree?
+ - we know that `preorder[0]` is always the root , if we  find that values' index in inorder , every element left to the index is i the left subtree and
+ every element right to it is in the right subtree . (`inLeft` and `inRight`)
+ - also , with len of `inLeft` , we can get the same element list in the preorder by getting (1,len) sublist and we can get the `preRight` with (len,end) sublist
+ - If we do this enough recursively we can make the tree node .
+
+ ```c++
+
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        if (preorder.empty() || inorder.empty()) return nullptr;
+
+        TreeNode* root = new TreeNode(preorder[0]);
+        auto mid = find(inorder.begin(),inorder.end(),preorder[0]) - inorder.begin();
+
+        vector<int>leftPre(preorder.begin() + 1, preorder.begin() + mid + 1);
+        vector<int> rightPre(preorder.begin() + mid + 1, preorder.end());
+        vector<int> leftIn(inorder.begin(), inorder.begin() + mid);
+        vector<int> rightIn(inorder.begin() + mid + 1, inorder.end());
+        root->left = buildTree(leftPre, leftIn);
+        root->right = buildTree(rightPre, rightIn);
+        return root;
+    }
+};
+ ```
