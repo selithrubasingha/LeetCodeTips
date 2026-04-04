@@ -390,3 +390,72 @@ public:
     }
 };
  ```
+
+ ## Serialize and Deserialize BST
+
+ - we need to store the whole tree as a string , and when the string is given , make the tree from that string  
+
+ - EVERY leaf node , will have NULL nodes and we need to mention that explicitly when serializing and deserializing . 
+
+ ```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Codec {
+public:
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        ostringstream out;
+        serialize(root, out);
+        return out.str();
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        istringstream in(data);
+        return deserialize(in);
+    }
+
+private:
+    // Recursive helper for serialization
+    void serialize(TreeNode* root, ostringstream& out) {
+        if (!root) {
+            out << "N "; // Using space as a delimiter is easier than commas
+            return;
+        }
+        out << root->val << " ";
+        serialize(root->left, out);
+        serialize(root->right, out);
+    }
+
+    // Recursive helper for deserialization
+    TreeNode* deserialize(istringstream& in) {
+        string val;
+        in >> val; // Automatically reads the next space-separated word
+        if (val == "N") return nullptr;
+
+        TreeNode* node = new TreeNode(stoi(val));
+        node->left = deserialize(in);
+        node->right = deserialize(in);
+        return node;
+    }
+};
+
+// Your Codec object will be instantiated and called as such:
+// Codec* ser = new Codec();
+// Codec* deser = new Codec();
+// string tree = ser->serialize(root);
+// TreeNode* ans = deser->deserialize(tree);
+// return ans;
+ ```
+
+ - SUPER IMPORTANT : instead of this ostringstream , we could make our own split and join function like the ones in python . 
+ the ostringstream is unfamiliar . nevertheless , BE SURE TO LOOK into this stringstream syntax , might be helpful in competitive coding . 
+
+ 
