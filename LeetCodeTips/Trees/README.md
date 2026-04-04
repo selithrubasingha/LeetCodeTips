@@ -172,3 +172,48 @@ public:
     }
 };
 ```
+
+## Binary Tree Level Order Traversal
+
+- A basic probelm uncluding BFS .
+- The tweak is that _we keep track of which level we are on_.
+- This can be done by getting the size of the  q . and doing the for loop until that exact iterations of size is over
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if (!root) return {};
+
+        vector<vector<int>> ans;
+
+        queue<TreeNode*> q;
+
+        q.push(root);
+
+        while (!q.empty()){
+            int n =q.size();
+            vector<int> temp;
+
+            for (int i = 0 ; i < n; i++){
+                TreeNode* curr = q.front();
+                q.pop();
+
+                //do something
+                temp.push_back(curr->val);
+
+                if (curr->left)
+                    q.push(curr->left);
+                if (curr->right)
+                    q.push(curr->right);
+
+            }
+
+            ans.push_back(temp);
+            
+        }
+
+        return ans;
+    }
+};
+```
