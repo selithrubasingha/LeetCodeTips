@@ -458,4 +458,40 @@ private:
  - SUPER IMPORTANT : instead of this ostringstream , we could make our own split and join function like the ones in python . 
  the ostringstream is unfamiliar . nevertheless , BE SURE TO LOOK into this stringstream syntax , might be helpful in competitive coding . 
 
+
+ ## Binary Tree Maximum Path Sum
+
+ - This is one of the rare cases where i solved this hard problem by myself , within 10 min . HA! once the GOAT always the GOAT . 
+
+ ```c++
+class Solution {
+public:
+    int maxPathSum(TreeNode* root) {
+        if (!root) return INT_MIN;
+
+        int leftHeight = sumPath(root->left);
+        int rightHeight = sumPath(root->right);
+        int diameter = leftHeight + rightHeight + root->val;
+        int sub = max(maxPathSum(root->left),
+                      maxPathSum(root->right));
+        return max(diameter, sub);
+
+
+        
+    }
+
+    int sumPath(TreeNode* root){
+        if (!root) return 0;
+
+        int ans =  root->val+max(sumPath(root->left),sumPath(root->right));
+
+        return ans<0 ? 0 : ans;
+    }
+};
+ ```
+
+ - just like the diameter problem, we do the dfs for every node (o(n**2)).
+ - notices how if the sum is negative , we don't even send it up  , instead we just send 0 :: meaning that path is not considered .
+ - also notice how in the main method , the base case return negative inf , if 0 is returned , the program won't catch negative numbers . 
+
  
