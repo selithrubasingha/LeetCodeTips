@@ -294,3 +294,34 @@ public:
     }
 };
  ```
+
+ ## Validate Binary Search Tree
+
+ - Just checking left< cur < right for every node is not enough !
+ - because ALL the elements in right of subtree should be greater than cur , and vice versa for left.`
+
+ - so we keep variables `left` and `right` to keep track of curr max and min bounds in the subtree , notice how we update them in each call . The initial values are + and - infinities . 
+
+ ```c++
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        return solve(root,LONG_MIN , LONG_MAX);
+        
+        
+    }
+
+    long solve(TreeNode* root , long left , long right){
+        if (!root) return true;
+
+        if (!(root->val<right && left<root->val) )
+            return false;
+
+        
+
+        bool ans = solve(root->left,left , root->val) && solve(root->right,root->val , right);
+
+        return ans;
+    }
+};
+ ```
