@@ -325,3 +325,39 @@ public:
     }
 };
  ```
+
+ ## Kth Smallest Element in a BST
+
+ - In order traversal BABY !
+
+ ```c++
+
+class Solution {
+public:
+
+    int ans = 0;
+
+    int kthSmallest(TreeNode* root, int k) {
+
+        int count = 0;
+
+        dfs(root , k , count);
+        return ans;
+
+        
+    }
+
+    void dfs(TreeNode* root , int k , int& count){
+
+       if (!root) return ;
+
+       dfs(root->left , k , count);
+       count++;
+       if (count==k) ans = root->val;
+
+       dfs(root->right , k , count);
+
+    }
+};
+
+ ```
