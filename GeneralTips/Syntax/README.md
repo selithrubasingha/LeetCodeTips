@@ -81,4 +81,23 @@ cin.tie(NULL);
 ### Pro-Tip for your Notes:
 When you use `max_element` or `sort` on an empty vector, your program will **crash**. Always ensure `!v.empty()` before calling these!
 
-Do you want to add a section on how to use `priority_queue`? It’s basically a "cheat code" for several common DSA problems.
+## 5. Integer / Double division
+
+### 1. `(double)(a / b)` — **The "Too Late" Cast**
+This is almost always a mistake if you are looking for a decimal.
+* **What happens:** The computer divides integer `a` by integer `b` first. It chops off the decimal (truncates). **Then** it converts that whole number to a double.
+* **Example:** `(double)(7 / 2)` $\rightarrow$ `(double)(3)` $\rightarrow$ `3.0`.
+* **Result:** You lost your `.5` forever.
+
+### 2. `(double)a / b` — **The "Right Way"**
+This works perfectly.
+* **What happens:** The cast is tied specifically to `a`. `a` becomes a double. In C++, if you divide a `double` by an `int`, the computer "promotes" the `int` to a `double` so it can do the math properly.
+* **Example:** `(double)7 / 2` $\rightarrow$ `7.0 / 2` $\rightarrow$ `7.0 / 2.0` $\rightarrow$ `3.5`.
+* **Result:** Correct decimal.
+
+### 3. `a / (double)b` — **Also the "Right Way"**
+This works for the exact same reason as #2.
+* **What happens:** `b` becomes a double first. The computer sees `int / double` and promotes the numerator to a double to match.
+* **Example:** `7 / (double)2` $\rightarrow$ `7 / 2.0` $\rightarrow$ `7.0 / 2.0` $\rightarrow$ `3.5`.
+* **Result:** Correct decimal.
+
