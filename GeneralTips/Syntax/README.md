@@ -101,3 +101,14 @@ This works for the exact same reason as #2.
 * **Example:** `7 / (double)2` $\rightarrow$ `7 / 2.0` $\rightarrow$ `7.0 / 2.0` $\rightarrow$ `3.5`.
 * **Result:** Correct decimal.
 
+## 6. Get the Ceil value
+
+```c++
+ceil(static_cast<double>(p) / k);
+```
+
+- Another way to get the ceiling mathematically . 
+
+```c++
+totalTime += (p + k - 1) / k; //for ceil(p/k)
+```
