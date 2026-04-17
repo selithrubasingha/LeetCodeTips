@@ -112,3 +112,12 @@ ceil(static_cast<double>(p) / k);
 ```c++
 totalTime += (p + k - 1) / k; //for ceil(p/k)
 ```
+
+## 7. getting the index when you know the value
+
+```c++
+        TreeNode* root = new TreeNode(preorder[0]);
+       auto mid = find(inorder.begin(),inorder.end(),preorder[0]) - inorder.begin();
+```
+
+- Here ... `mid` is an iterator , not an int . 
