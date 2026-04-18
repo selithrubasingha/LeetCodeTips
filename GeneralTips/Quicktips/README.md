@@ -71,4 +71,17 @@ bool isSameTree(TreeNode* p, TreeNode* q) {
         
     }
 ```
+
+## Dynamic programming -1D
+
+- Climbing stairs is basically asking for hte fibonacci sequence  ,
+- House robber teachers us the `skip or go ` recursive technique . This method can be seen in other methods too . 
+- Notice in House robber ... we are given the houses array . for the n th house argument case the actual house there is n-1 BECAUSE of the 0 indexed problem . This is different from the climbing stairs indexing . 
+- If you see palindrome ... just use the l--,r++ mehtod . don't use recurion !
+- Decode ways is just like a `skip or go`. BUT it's more like `check the first none and go :: OR check the first two and go `.
+- word break is AT LEAST type recursion
+- Longest increasing subseq is also `skip and go`. although i bit advances ... must refer later . 
+- after you get the answer ... try to memoize it . either 1D memo or 2D memo . 
+
+
  
