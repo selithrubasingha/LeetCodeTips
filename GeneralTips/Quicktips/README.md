@@ -83,5 +83,39 @@ bool isSameTree(TreeNode* p, TreeNode* q) {
 - Longest increasing subseq is also `skip and go`. although i bit advances ... must refer later . 
 - after you get the answer ... try to memoize it . either 1D memo or 2D memo . 
 
+## Dynamic programming - 2D
 
- 
+- unique paths - grid technique 
+- LOngest common subseq - grid technique again . 
+
+```c++
+if (text1[i]==text2[j]){
+                    dp[i+1][j+1]  = 1+ dp[i][j];
+                }else{
+                    dp[i+1][j+1] = max(dp[i][j+1] , dp[i+1][j]);
+                }
+```
+ - Buy and sell stock with cool down - This is kinda like a `skip or go` variation . `skip or buy or sell` . 
+ - Coin change : remember EVERY SINGLE variation 
+
+ ```c++
+for (int i = startIndex ; i < n ; i++){
+            total += solve(amount-coins[i], coins , i , memo);
+
+        }
+//changing i to i+1 ? removing the startIndex completely ? what could happen ? 
+ ```
+
+ - Target sum : just normal stuff . but caching is a hassle . 
+ - Interleaving string : either we choose left one or right one and increment .  if the char ain't equal . then return false . 
+ - use PrevValue as an argument and go through the 4 directions 
+ - distinct subseq - `skip or go `
+ - edit distance - grid technique
+
+ ```c++
+if (word1[i]==word2[j]){
+                    dp[i+1][j+1] = dp[i][j];
+}else{
+    dp[i+1][j+1] = 1+min(min(dp[i][j+1],dp[i+1][j]),dp[i][j]);
+}
+ ```
