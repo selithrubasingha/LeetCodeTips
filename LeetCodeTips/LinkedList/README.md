@@ -126,42 +126,27 @@ _You may not modify the values in the list's nodes. Only nodes themselves may be
 ```C++
 class Solution {
 public:
-    void reorderList(ListNode* head) {
-        ListNode* slow = head;
-        ListNode* fast = head;
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* dummy = new ListNode();
+        ListNode* cur = dummy;
 
-        //find the middle (using tortoise and hare)
-        while ( fast && fast->next){
-            slow = slow->next;
-            fast = fast->next->next;
-        } 
+        int carry = 0;
+        while (l1 != nullptr || l2 != nullptr || carry != 0) {
+            int v1 = (l1 != nullptr) ? l1->val : 0;
+            int v2 = (l2 != nullptr) ? l2->val : 0;
 
-        ListNode* second = slow->next;
+            int val = v1 + v2 + carry;
+            carry = val / 10;
+            val = val % 10;
+            cur->next = new ListNode(val);
 
-        ListNode* first = head;
-        ListNode* prev = slow->next =nullptr;
-
-        //reversing  the second linked list
-        while (second){
-            ListNode* nxt = second->next;
-            second->next = prev;
-            prev = second;
-            second = nxt;
-
+            cur = cur->next;
+            l1 = (l1 != nullptr) ? l1->next : nullptr;
+            l2 = (l2 != nullptr) ? l2->next : nullptr;
         }
-
-        
-        //merging 
-        second = prev;
-        while (second != nullptr) {
-            ListNode* tmp1 = first->next;
-            ListNode* tmp2 = second->next;
-            first->next = second;
-            second->next = tmp1;
-            first = tmp1;
-            second = tmp2;
-        }
-   
+        ListNode* res = dummy->next;
+        delete dummy;
+        return res;
     }
 };
 ```
