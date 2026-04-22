@@ -169,4 +169,27 @@ ListNode* newnxt = slow->next ? slow->next->next : slow->next;
 
 ## Two pointers
 
-- 
+- it's `while (l<r)`
+- If you're gonna use `while` inside of the MAIN   `while` loop . YOU BETTER CHECK THE `l<r` logic again . 
+
+```c++
+while (l < r) {
+    // Safety brake: l < r
+    while (l < r && !isalnum(s[l])) {
+        l++;
+    }
+    
+    // Safety brake: l < r
+    while (l < r && !isalnum(s[r])) {
+        r--;
+    }
+
+    // Once we have valid alphanumeric characters, compare them
+    if (tolower(s[l]) != tolower(s[r])) {
+        return false;
+    }
+
+    l++;
+    r--;
+}
+```
