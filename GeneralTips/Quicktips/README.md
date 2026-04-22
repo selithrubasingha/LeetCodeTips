@@ -166,3 +166,7 @@ ListNode* newnxt = slow->next ? slow->next->next : slow->next;
 - If you wanna make a deep copy of  linked list ... use an unordered_map !
 
 - Also look into the merge sort merge linked list thing too . 
+
+## Two pointers
+
+- 

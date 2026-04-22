@@ -121,3 +121,26 @@ totalTime += (p + k - 1) / k; //for ceil(p/k)
 ```
 
 - Here ... `mid` is an iterator , not an int . 
+
+## 8. 
+
+1. The Functions
+
+### `std::isalnum`
+
+* What it does:
+    *  Checks if a given character is alphanumeric (meaning it is either a letter from A-Z/a-z or a digit from 0-9).
+
+* ___Returns___: A non-zero value (which evaluates to true in C++) if the character is alphanumeric, and 0 (false) if it is not (like punctuation, spaces, or special symbols).
+
+### std::tolower
+* What it does: 
+    * Converts an uppercase letter to its lowercase equivalent.
+
+* __Returns__: The lowercase version of the character. If the character is already lowercase, or if it isn't a letter at all (like a number or a comma), it simply __returns__ the original character unchanged.
+
+### std::toupper
+* What it does:
+    * Converts a lowercase letter to its uppercase equivalent.
+
+* __Returns__: The uppercase version of the character. Like tolower, it leaves non-lowercase characters completely unmodified.
