@@ -126,27 +126,42 @@ _You may not modify the values in the list's nodes. Only nodes themselves may be
 ```C++
 class Solution {
 public:
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* dummy = new ListNode();
-        ListNode* cur = dummy;
+    void reorderList(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
 
-        int carry = 0;
-        while (l1 != nullptr || l2 != nullptr || carry != 0) {
-            int v1 = (l1 != nullptr) ? l1->val : 0;
-            int v2 = (l2 != nullptr) ? l2->val : 0;
+        //find the middle (using tortoise and hare)
+        while ( fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        } 
 
-            int val = v1 + v2 + carry;
-            carry = val / 10;
-            val = val % 10;
-            cur->next = new ListNode(val);
+        ListNode* second = slow->next;
 
-            cur = cur->next;
-            l1 = (l1 != nullptr) ? l1->next : nullptr;
-            l2 = (l2 != nullptr) ? l2->next : nullptr;
+        ListNode* first = head;
+        ListNode* prev = slow->next =nullptr;
+
+        //reversing  the second linked list
+        while (second){
+            ListNode* nxt = second->next;
+            second->next = prev;
+            prev = second;
+            second = nxt;
+
         }
-        ListNode* res = dummy->next;
-        delete dummy;
-        return res;
+
+        
+        //merging 
+        second = prev;
+        while (second != nullptr) {
+            ListNode* tmp1 = first->next;
+            ListNode* tmp2 = second->next;
+            first->next = second;
+            second->next = tmp1;
+            first = tmp1;
+            second = tmp2;
+        }
+   
     }
 };
 ```
@@ -243,33 +258,30 @@ _You are given two non-empty linked lists representing two non-negative integers
 - Dude ! remember how we used to calculate additions in pre school ? yeah ! we do the exact same logic here ... they even made it easier for us by giving the linked lists reversed !
 
 ```C++
+
 class Solution {
 public:
-    Node* copyRandomList(Node* head) {
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* dummy = new ListNode();
+        ListNode* cur = dummy;
 
-        unordered_map<Node* , Node* > mapper;
-        mapper[NULL] = NULL;
+        int carry = 0;
+        while (l1 != nullptr || l2 != nullptr || carry != 0) {
+            int v1 = (l1 != nullptr) ? l1->val : 0;
+            int v2 = (l2 != nullptr) ? l2->val : 0;
 
-        Node* curr = head;
+            int val = v1 + v2 + carry;
+            carry = val / 10;
+            val = val % 10;
+            cur->next = new ListNode(val);
 
-        while (curr!=NULL){
-            Node* copy = new Node(curr->val);
-            mapper[curr] = copy;
-            curr = curr->next;
+            cur = cur->next;
+            l1 = (l1 != nullptr) ? l1->next : nullptr;
+            l2 = (l2 != nullptr) ? l2->next : nullptr;
         }
-
-        curr = head;
-
-        while (curr!=NULL){
-            Node* copy = mapper[curr];
-            copy->next = mapper[curr->next];
-            copy->random = mapper[curr->random];
-            curr = curr->next;
-        }
-
-        return mapper[head];
-
-        
+        ListNode* res = dummy->next;
+        delete dummy;
+        return res;
     }
 };
 ```

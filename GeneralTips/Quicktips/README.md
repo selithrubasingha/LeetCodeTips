@@ -119,3 +119,28 @@ if (word1[i]==word2[j]){
     dp[i+1][j+1] = 1+min(min(dp[i][j+1],dp[i+1][j]),dp[i][j]);
 }
  ```
+
+ ## Linked List
+
+ - We traverse by simply `node = node->next` ing.
+ - If you are asked to merge a list .or create a new linked list . You should use the Dummy Node method . 
+
+ ```c++
+
+ListNode dummy(0);
+ListNode* node = &dummy;
+
+ ```
+
+ - If you want to through a list halfway , or to any index in the list . You should be using the tortoise and Hare algo . 
+
+ ```c++
+while ( fast && fast->next){
+    slow = slow->next;
+    fast = fast->next->next;
+
+    if (slow == fast) return true;
+} 
+ ```
+
+ - The ternary operator technique : If we need to 
