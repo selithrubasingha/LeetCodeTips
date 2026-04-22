@@ -143,4 +143,26 @@ while ( fast && fast->next){
 } 
  ```
 
- - The ternary operator technique : If we need to 
+ - The ternary operator technique : If we need to get next node . You need to check if the current node is `NOT nullptr` sometimes
+
+ ```c++
+int v1 = (l1 != nullptr) ? l1->val : 0;
+int v2 = (l2 != nullptr) ? l2->val : 0;
+
+int val = v1 + v2 + carry;
+carry = val / 10;
+val = val % 10;
+cur->next = new ListNode(val);
+
+cur = cur->next;
+l1 = (l1 != nullptr) ? l1->next : nullptr;
+l2 = (l2 != nullptr) ? l2->next : nullptr;
+ ```
+
+```c++
+
+ListNode* newnxt = slow->next ? slow->next->next : slow->next;
+```
+- If you wanna make a deep copy of  linked list ... use an unordered_map !
+
+- Also look into the merge sort merge linked list thing too . 
