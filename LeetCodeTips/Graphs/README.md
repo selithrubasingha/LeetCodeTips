@@ -490,7 +490,7 @@ public:
     - if there are n nodes there should be EXEACTLY n-1 nodes . 
 
 - Well the cycle detection is the same as the previous question . 
-- This is and `at least` recursion question . 
+- This is and `at least` type recursion question . 
 ```c++
 class Solution {
 public:
@@ -546,3 +546,50 @@ public:
 };
 ```
 
+## Number of Connected Components in an Undirected Graph
+
+- basically the same as NUMBER OF ISLANDS questions . except for the fact that this is an adjacency matrix
+
+```c++
+class Solution {
+public:
+    int countComponents(int n, vector<vector<int>>& edges) {
+
+        vector<vector<int>> adj(n,vector<int>());
+
+        for (const auto& pair : edges){
+            int u = pair[0];
+            int v = pair[1];
+
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+
+        int count = 0;
+        vector<bool> visited(n,false);
+
+        for (int i = 0 ; i< n ; i++){
+            if (visited[i]==false){
+                count++;
+                dfs(i,-1,adj,visited);
+            }
+        }
+
+        return count;
+
+        
+
+    }
+
+    void dfs(int node,int prev ,vector<vector<int>>& adj , vector<bool>&  visited ){
+
+        visited[node] = true;
+
+        for (int n : adj[node]){
+            if (visited[n]) continue;
+
+            dfs(n,node, adj,visited);
+        }
+    }
+};
+```
