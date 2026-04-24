@@ -427,3 +427,57 @@ public:
     }
 };
 ```
+
+## COurse shedule 2
+
+- they want us to output the path itself , for that we use a global like output vector to store the answer , and a visited and cycle vector to keep track of visited nodes and the visited with the cycle nodes .  
+
+```c++
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        
+    vector<vector<int>> adj(numCourses);
+        int n = prerequisites.size();
+        for (const auto& pair : prerequisites){
+            int u = pair[0];
+            int v = pair[1];
+
+            adj[u].push_back(v);
+        }
+        vector<bool> cycle(numCourses,false);
+        vector<bool> visited(numCourses,false);
+        vector<int> output;
+        for (int i = 0 ; i <numCourses; i++ ){
+            if (!dfs(i,adj,cycle,visited,output)) return {};
+        }
+
+        return output;
+
+        
+        
+    }
+
+    bool dfs(int node , vector<vector<int>>& adj, vector<bool> & cycle , vector<bool> & visited , vector<int>& output){
+        if (cycle[node]==true) return false;
+        if (visited[node]==true) return true;
+
+        cycle[node] = true;
+        for (int n : adj[node]){
+            if (dfs(n,adj,cycle,visited , output)==false) return false;
+        }
+
+        cycle[node]  = false;
+        visited[node] = true;
+        adj[node]={};
+        output.push_back(node);
+        return true;
+
+
+
+
+
+    }
+};
+
+```
