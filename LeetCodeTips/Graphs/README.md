@@ -81,4 +81,56 @@ void dfs(int i , int j ,vector<vector<int>>& grid , int& count ){
 };
 ```
 
-## 
+## Clone Graph
+
+```c++
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> neighbors;
+    Node() {
+        val = 0;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val) {
+        val = _val;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val, vector<Node*> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+};
+*/
+
+class Solution {
+public:
+    Node* dfs(Node* node , unordered_map<Node*,Node*>& hashmap){
+        if (!node) return nullptr;
+
+        if (hashmap.count(node)) return hashmap[node];
+
+        Node* temp = new Node(node->val);
+        hashmap[node] = temp;
+
+        for (auto& nei : node->neighbors){
+            temp->neighbors.push_back(dfs(nei, hashmap));
+        }
+
+        return temp;
+
+    }
+    Node* cloneGraph(Node* node) {
+
+        unordered_map<Node*,Node*> hashmap;
+
+        return dfs(node , hashmap);
+        
+    }
+};
+```
+
+- The hashmap is BASICALLY a visited set thingy . It keeps track of the visited nodes ... kinda like a dp memo.
+- We make new nodes if every recursive step . and inside the for loop of that method . we call dfs again (which also returns a temp node) . 
