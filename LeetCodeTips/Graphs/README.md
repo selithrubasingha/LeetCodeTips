@@ -379,3 +379,51 @@ public:
     }
 };
 ```
+## COurse Shedule
+
+- we do DFS ... but need to know if the curr node we are checking is visited WITHIN that set current set of recursive steps . 
+- to do this when we finish the for loop , we need to set the curr visited node to false . 
+- Also once the node is visited and there is no problem completing that current course in the node . we need to set the `adj = {}` .To avoid repeated work   .
+
+```c++
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> adj(numCourses);
+        int n = prerequisites.size();
+        for (const auto& pair : prerequisites){
+            int u = pair[0];
+            int v = pair[1];
+
+            adj[u].push_back(v);
+        }
+        vector<bool> visited(numCourses,false);
+        for (int i = 0 ; i <numCourses; i++ ){
+            if (!dfs(i,adj,visited)) return false;
+        }
+
+        return true;
+
+        
+        
+    }
+
+    bool dfs(int node , vector<vector<int>>& adj, vector<bool> & visited){
+        if (visited[node]==true) return false;
+
+        visited[node] = true;
+        for (int n : adj[node]){
+            if (dfs(n,adj,visited)==false) return false;
+        }
+
+        visited[node]  = false;
+        adj[node]={};
+        return true;
+
+
+
+
+
+    }
+};
+```
