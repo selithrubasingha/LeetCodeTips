@@ -481,3 +481,68 @@ public:
 };
 
 ```
+
+## Graph valid tree
+
+- Features of trees
+    - There are no cycles in tree graph . 
+    - ALL the nodes should be connected  . 
+    - if there are n nodes there should be EXEACTLY n-1 nodes . 
+
+- Well the cycle detection is the same as the previous question . 
+- This is and `at least` recursion question . 
+```c++
+class Solution {
+public:
+    /**
+     * @param n: An integer
+     * @param edges: a list of undirected edges
+     * @return: true if it's a valid tree, or false
+     */
+    bool validTree(int n, vector<vector<int>> &edges) {
+        // write your code here
+
+        if (edges.size() != n - 1) return false;
+
+        
+        vector<vector<int>> adj(n,vector<int>());
+
+        for (const auto& pair : edges){
+            int u = pair[0];
+            int v = pair[1];
+
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+
+        vector<bool>visited (n,false);
+
+        int ans = dfs(0,-1,adj,visited);
+
+        for (int i = 0 ; i < n ; i++){
+            if (visited[i]==false) return false;
+        }
+
+        return ans;
+        
+
+    }
+
+    bool dfs(int node ,int prev,vector<vector<int>> & adj , vector<bool>& visited ){
+
+        if (visited[node] == true) return false;
+
+        visited[node]=true;
+
+        for (int n : adj[node]){
+
+            if (n==prev) continue;
+
+            if (dfs(n ,node, adj , visited)==false) return false;
+        }
+
+        return true;
+    }
+};
+```
+
