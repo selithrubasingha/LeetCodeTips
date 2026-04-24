@@ -189,3 +189,74 @@ if (r < 0 || r >= m || c < 0 ||
     grid[r][c] = grid[row][col] + 1;
     q.push({r, c});
 ```
+
+
+## Rotting Oranges
+
+- Same as the prev one , Only the main logic changes . 
+
+```c++
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        vector<vector<int>> dirs = {{-1, 0}, {1, 0},
+
+                                    {0, -1}, {0, 1}};
+
+        int rows = grid.size();
+        int cols = grid[0].size();
+
+        queue<pair<int,int>> q;
+
+        for (int i = 0 ; i < rows; i++){
+            for (int j = 0 ; j< cols ; j++){
+                if (grid[i][j]==2)
+                    q.push({i,j});
+            }
+        }
+
+        int time = 0;
+
+        while (!q.empty()){
+            int size = q.size();
+            
+            for (int i = 0; i<size;i++){
+                int row = q.front().first;
+                int col = q.front().second;
+                q.pop();
+
+                for (int j = 0; j<4 ; j++){
+                    int nr = row+dirs[j][0];
+                    int nc = col+dirs[j][1];
+
+                    if (nr < 0 || nr >= rows || nc < 0 ||
+                    nc >= cols || grid[nr][nc] != 1) {
+                        continue;
+                }
+                    grid[nr][nc] = 2;
+                    q.push({nr,nc});
+
+
+                }
+
+            }
+
+            time++;
+            
+
+            
+        }
+
+        for (int i = 0 ; i < rows; i++){
+            for (int j = 0 ; j< cols ; j++){
+                if (grid[i][j]==1)
+                    return -1;
+            }
+        }
+
+        return max(time-1,0);
+        
+        
+    }
+};
+```
