@@ -260,3 +260,70 @@ public:
     }
 };
 ```
+
+## Pacific atlantic
+
+- top row and left col  slots are definitley pacific . 
+- bottom row and right col slots are definitely atlantic . 
+- we do DFS from everyslot mentioned above and update the 2D `can flow` matrices . 
+
+```c++
+class Solution {
+public:
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+        int rows = heights.size();
+        int cols = heights[0].size();
+        vector<vector<bool>> pac(rows , vector<bool>(cols,false));
+        vector<vector<bool>> atl(rows , vector<bool>(cols,false));
+
+        // Top and Bottom borders
+    for (int c = 0; c < cols; c++) {
+        // Pacific (Top row: r=0)
+        dfs(0, c, pac, heights[0][c], heights);
+        // Atlantic (Bottom row: r=rows-1)
+        dfs(rows - 1, c, atl, heights[rows - 1][c], heights);
+    }
+
+    // Left and Right borders
+    for (int r = 0; r < rows; r++) {
+        // Pacific (Left col: c=0)
+        dfs(r, 0, pac, heights[r][0], heights);
+        // Atlantic (Right col: c=cols-1)
+        dfs(r, cols - 1, atl, heights[r][cols - 1], heights);
+    }
+
+        vector<vector<int>> res;
+
+        for (int r = 0; r<rows; r++){
+            for (int c = 0 ; c< cols ; c++){
+                if (pac[r][c] && atl[r][c])
+                    res.push_back({r,c});
+            }
+        }
+        
+
+        return res;
+        
+    }
+
+    void dfs(int r, int c, vector<vector<bool>>& visit, int prevHeight, vector<vector<int>>& heights) {
+    int ROWS = heights.size();
+    int COLS = heights[0].size();
+
+    // "Leap Before You Look" - Base cases handle all boundary and logic checks
+    if (r < 0 || c < 0 || r == ROWS || c == COLS || 
+        visit[r][c] || heights[r][c] < prevHeight) {
+        return;
+    }
+
+    // Mark as visited
+    visit[r][c] = true;
+
+    // Recursive calls in all 4 directions
+    dfs(r + 1, c, visit, heights[r][c], heights);
+    dfs(r - 1, c, visit, heights[r][c], heights);
+    dfs(r, c + 1, visit, heights[r][c], heights);
+    dfs(r, c - 1, visit, heights[r][c], heights);
+}
+};
+```
