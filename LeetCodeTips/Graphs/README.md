@@ -40,4 +40,45 @@ public:
 
 - Don't be fooled by the double for loops . this method is O(1).
 
+## Max Area of Island
+
+- Same as the previous one . but in order to get the Area of the island we need a count variable everytime we DFS ! 
+
+```c++
+class Solution {
+public:
+void dfs(int i , int j ,vector<vector<int>>& grid , int& count ){
+        if (0>i || i>=grid.size()||j<0 || j>=grid[0].size()||grid[i][j]==0) return;
+
+        grid[i][j]=0;
+        count++;
+        dfs(i,j+1,grid , count);
+        dfs(i+1,j,grid , count);
+        dfs(i-1,j,grid , count);
+        dfs(i,j-1,grid , count);
+    }
+
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int rows = grid.size();
+        int cols = grid[0].size();
+        int ans = 0;
+        
+
+        for (int i = 0 ; i < rows ; i++){
+            for (int j = 0; j < cols ; j++){
+                int count = 0;
+                if (grid[i][j]==1){
+
+                    dfs(i,j,grid,count);
+
+                    ans = max(ans , count);
+                }
+            }
+        }
+
+        return ans;
+    }
+};
+```
+
 ## 
